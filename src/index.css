@@ -2,104 +2,161 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Definition of the design system. All colors, gradients, fonts, etc should be defined here. 
-All colors MUST be HSL.
-*/
-
 @layer base {
   :root {
-    --background: 0 0% 100%;
-    --foreground: 222.2 84% 4.9%;
+    /* MemoryART Pastel Palette - HSL */
+    --background: 40 50% 97%;          /* off-white cream */
+    --foreground: 280 25% 25%;         /* deep plum */
 
     --card: 0 0% 100%;
-    --card-foreground: 222.2 84% 4.9%;
+    --card-foreground: 280 25% 25%;
 
     --popover: 0 0% 100%;
-    --popover-foreground: 222.2 84% 4.9%;
+    --popover-foreground: 280 25% 25%;
 
-    --primary: 222.2 47.4% 11.2%;
-    --primary-foreground: 210 40% 98%;
+    /* Rosa #F7B6C2 */
+    --primary: 350 78% 84%;
+    --primary-foreground: 340 50% 25%;
 
-    --secondary: 210 40% 96.1%;
-    --secondary-foreground: 222.2 47.4% 11.2%;
+    /* Verde menta #BFEAD6 */
+    --secondary: 147 53% 84%;
+    --secondary-foreground: 160 40% 22%;
 
-    --muted: 210 40% 96.1%;
-    --muted-foreground: 215.4 16.3% 46.9%;
+    --muted: 40 40% 94%;
+    --muted-foreground: 280 15% 45%;
 
-    --accent: 210 40% 96.1%;
-    --accent-foreground: 222.2 47.4% 11.2%;
+    /* Lilás #DCC7F5 */
+    --accent: 264 65% 87%;
+    --accent-foreground: 270 40% 28%;
 
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 210 40% 98%;
+    --destructive: 0 75% 60%;
+    --destructive-foreground: 0 0% 100%;
 
-    --border: 214.3 31.8% 91.4%;
-    --input: 214.3 31.8% 91.4%;
-    --ring: 222.2 84% 4.9%;
+    --border: 350 40% 88%;
+    --input: 350 30% 90%;
+    --ring: 350 78% 75%;
 
-    --radius: 0.5rem;
+    --radius: 1.25rem;
 
-    --sidebar-background: 0 0% 98%;
+    /* Brand tokens */
+    --rosa: 350 78% 84%;
+    --rosa-soft: 350 90% 96%;
+    --pessego: 26 100% 86%;
+    --pessego-soft: 26 100% 95%;
+    --lilas: 264 65% 87%;
+    --lilas-soft: 264 70% 96%;
+    --menta: 147 53% 84%;
+    --menta-soft: 147 60% 95%;
+    --azul: 211 100% 91%;
+    --azul-soft: 211 100% 96%;
+    --amarelo: 45 100% 82%;
+    --amarelo-soft: 45 100% 94%;
+    --cream: 40 50% 97%;
 
-    --sidebar-foreground: 240 5.3% 26.1%;
+    --shadow-soft: 0 8px 24px -8px hsl(350 60% 70% / 0.25);
+    --shadow-card: 0 4px 16px -4px hsl(280 30% 50% / 0.12);
+    --shadow-sticker: 2px 3px 0 hsl(280 25% 25% / 0.08);
 
-    --sidebar-primary: 240 5.9% 10%;
-
-    --sidebar-primary-foreground: 0 0% 98%;
-
-    --sidebar-accent: 240 4.8% 95.9%;
-
-    --sidebar-accent-foreground: 240 5.9% 10%;
-
-    --sidebar-border: 220 13% 91%;
-
-    --sidebar-ring: 217.2 91.2% 59.8%;
-  }
-
-  .dark {
-    --background: 222.2 84% 4.9%;
-    --foreground: 210 40% 98%;
-
-    --card: 222.2 84% 4.9%;
-    --card-foreground: 210 40% 98%;
-
-    --popover: 222.2 84% 4.9%;
-    --popover-foreground: 210 40% 98%;
-
-    --primary: 210 40% 98%;
-    --primary-foreground: 222.2 47.4% 11.2%;
-
-    --secondary: 217.2 32.6% 17.5%;
-    --secondary-foreground: 210 40% 98%;
-
-    --muted: 217.2 32.6% 17.5%;
-    --muted-foreground: 215 20.2% 65.1%;
-
-    --accent: 217.2 32.6% 17.5%;
-    --accent-foreground: 210 40% 98%;
-
-    --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 210 40% 98%;
-
-    --border: 217.2 32.6% 17.5%;
-    --input: 217.2 32.6% 17.5%;
-    --ring: 212.7 26.8% 83.9%;
-    --sidebar-background: 240 5.9% 10%;
-    --sidebar-foreground: 240 4.8% 95.9%;
-    --sidebar-primary: 224.3 76.3% 48%;
-    --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 240 3.7% 15.9%;
-    --sidebar-accent-foreground: 240 4.8% 95.9%;
-    --sidebar-border: 240 3.7% 15.9%;
-    --sidebar-ring: 217.2 91.2% 59.8%;
+    --gradient-hero: linear-gradient(180deg, hsl(var(--rosa-soft)) 0%, hsl(var(--cream)) 60%, hsl(var(--azul-soft)) 100%);
+    --gradient-cta: linear-gradient(135deg, hsl(147 53% 78%), hsl(147 60% 70%));
+    --gradient-cta-pink: linear-gradient(135deg, hsl(350 78% 80%), hsl(350 85% 72%));
   }
 }
 
 @layer base {
-  * {
-    @apply border-border;
+  * { @apply border-border; }
+  body {
+    @apply bg-background text-foreground antialiased;
+    font-family: 'Nunito', system-ui, sans-serif;
+    background-image:
+      radial-gradient(circle at 10% 10%, hsl(var(--rosa-soft)) 0%, transparent 40%),
+      radial-gradient(circle at 90% 80%, hsl(var(--azul-soft)) 0%, transparent 40%);
+    background-attachment: fixed;
+  }
+  h1, h2, h3, h4 {
+    font-family: 'Baloo 2', 'Nunito', cursive;
+    letter-spacing: -0.01em;
+  }
+}
+
+@layer components {
+  .container-mobile {
+    @apply w-full max-w-[460px] mx-auto px-5;
   }
 
-  body {
-    @apply bg-background text-foreground;
+  .dashed-card {
+    @apply border-2 border-dashed rounded-3xl flex items-center justify-center text-center;
+    border-color: hsl(var(--rosa) / 0.6);
+    background: repeating-linear-gradient(
+      45deg,
+      hsl(var(--rosa-soft)),
+      hsl(var(--rosa-soft)) 10px,
+      hsl(var(--cream)) 10px,
+      hsl(var(--cream)) 20px
+    );
   }
+
+  .sticker {
+    @apply relative bg-white rounded-3xl;
+    box-shadow: var(--shadow-card), 0 0 0 1px hsl(var(--border));
+  }
+
+  .washi-tape {
+    @apply absolute h-5 w-20 rotate-[-8deg] opacity-80;
+    background-image: repeating-linear-gradient(
+      45deg,
+      hsl(var(--menta)),
+      hsl(var(--menta)) 6px,
+      hsl(var(--menta-soft)) 6px,
+      hsl(var(--menta-soft)) 12px
+    );
+  }
+
+  .cta-button {
+    @apply inline-flex items-center justify-center gap-2 font-bold text-base px-7 py-4 rounded-full transition-all;
+    background: var(--gradient-cta);
+    color: hsl(160 50% 18%);
+    box-shadow: 0 6px 0 hsl(147 40% 60%), var(--shadow-soft);
+    font-family: 'Baloo 2', cursive;
+  }
+  .cta-button:hover { transform: translateY(-2px); box-shadow: 0 8px 0 hsl(147 40% 60%), var(--shadow-soft); }
+  .cta-button:active { transform: translateY(3px); box-shadow: 0 3px 0 hsl(147 40% 60%); }
+
+  .cta-pink {
+    background: var(--gradient-cta-pink);
+    color: hsl(340 50% 22%);
+    box-shadow: 0 6px 0 hsl(350 60% 70%), var(--shadow-soft);
+  }
+  .cta-pink:hover { box-shadow: 0 8px 0 hsl(350 60% 70%), var(--shadow-soft); }
+
+  .dotted-divider {
+    background-image: radial-gradient(circle, hsl(var(--rosa)) 1.5px, transparent 1.5px);
+    background-size: 14px 14px;
+    background-repeat: repeat-x;
+    background-position: center;
+    height: 14px;
+  }
+
+  .wave-divider {
+    height: 30px;
+    background-repeat: repeat-x;
+    background-size: 60px 30px;
+  }
+
+  .tag-label {
+    @apply inline-block px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider;
+    font-family: 'Baloo 2', cursive;
+  }
+
+  .animate-fade-in { animation: fadeIn 0.6s ease-out both; }
+  .animate-float { animation: float 4s ease-in-out infinite; }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(12px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@keyframes float {
+  0%,100% { transform: translateY(0) rotate(-3deg); }
+  50% { transform: translateY(-6px) rotate(3deg); }
 }
