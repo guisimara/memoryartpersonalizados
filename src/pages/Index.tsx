@@ -256,7 +256,7 @@ const Index = () => {
         <div className="text-center mb-4">
           <Tag color="menta">Galeria</Tag>
           <h2 className="font-display font-extrabold mt-3 leading-tight" style={{ fontSize: "1.6rem" }}>
-            Veja os resultados das nossas alunas ✨
+            Veja um pouco do que contém em nosso kit protocolo papelaria personalizada.
           </h2>
         </div>
         <Carousel />
@@ -283,8 +283,8 @@ const Index = () => {
                   <Tag color={m.tone}>Módulo {String(i + 1).padStart(2, "0")}</Tag>
                 </div>
                 <img src={moduleImages[i]} alt={m.title} className="rounded-xl mb-2 object-cover w-full" />
-                <h4 className="font-display font-extrabold text-sm leading-tight mb-1">{m.title}</h4>
-                <p className="text-muted-foreground" style={{ fontSize: "0.75rem" }}>{m.desc}</p>
+                <h4 className="font-display font-extrabold leading-tight mb-1" style={{ fontSize: "1.3rem" }}>{m.title}</h4>
+                <p className="text-muted-foreground" style={{ fontSize: "0.92rem" }}>{m.desc}</p>
               </div>
             );
           })}
@@ -299,17 +299,25 @@ const Index = () => {
             O Protocolo 10k com Papelaria Personalizada é para você que…
           </h2>
         </div>
-        <div className="sticker p-5">
-          <ul className="space-y-3">
-            {paraVoce.map((p) => (
-              <li key={p} className="flex items-start gap-3">
-                <span className="mt-0.5 flex-shrink-0 w-6 h-6 rounded-full bg-menta flex items-center justify-center">
-                  <Check className="w-3.5 h-3.5" strokeWidth={3} />
-                </span>
-                <span className="font-semibold leading-snug">{p}</span>
-              </li>
-            ))}
-          </ul>
+        <div className="flex gap-5 items-center">
+          <div className="sticker p-5 flex-1">
+            <ul className="space-y-3">
+              {paraVoce.map((p) => (
+                <li key={p} className="flex items-start gap-3">
+                  <span className="mt-0.5 flex-shrink-0 w-6 h-6 rounded-full bg-menta flex items-center justify-center">
+                    <Check className="w-3.5 h-3.5" strokeWidth={3} />
+                  </span>
+                  <span className="font-semibold leading-snug">{p}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+          <img
+            src="/images/paraquem.png"
+            alt="Para quem é"
+            className="rounded-3xl object-cover flex-shrink-0"
+            style={{ width: "52%" }}
+          />
         </div>
       </Section>
 
