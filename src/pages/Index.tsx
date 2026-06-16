@@ -196,7 +196,7 @@ const Index = () => {
                   <Tag color={m.tone}>Módulo {String(i + 1).padStart(2, "0")}</Tag>
                 </div>
                 {moduleImages[i] ? (
-                  <img src={moduleImages[i]} alt={m.title} className="w-full rounded-2xl mb-3 object-cover" />
+                  <img src={moduleImages[i]} alt={m.title} className="rounded-2xl mb-3 object-cover mx-auto block" style={{ width: "80%" }} />
                 ) : (
                   <Placeholder label={`Capa do módulo ${i + 1}`} aspect="video" tone={m.tone} className="mb-3" />
                 )}
@@ -267,7 +267,8 @@ const Index = () => {
             <img
               src="/images/hero-banner-att.png"
               alt="Kit MemoryART"
-              className="w-full rounded-2xl mb-5"
+              className="rounded-2xl mb-5 mx-auto block"
+              style={{ width: "80%" }}
             />
             <div className="text-center">
               <p className="uppercase tracking-widest font-bold text-muted-foreground">Acesso imediato</p>
@@ -383,7 +384,8 @@ const Index = () => {
           <img
             src="/images/hero-banner-att.png"
             alt="Kit MemoryART"
-            className="w-full rounded-2xl mb-4"
+            className="rounded-2xl mb-4 mx-auto block"
+            style={{ width: "80%" }}
           />
           <p className="font-display font-extrabold text-foreground mb-1" style={{ fontSize: "1.7rem" }}>
             Kit Protocolo 10k com Papelaria Personalizada
