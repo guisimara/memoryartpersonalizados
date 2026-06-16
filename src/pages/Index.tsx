@@ -1,9 +1,10 @@
+import { useState, useEffect } from "react";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { CTAButton } from "@/components/memory/CTAButton";
 import { Placeholder } from "@/components/memory/Placeholder";
 import { Section } from "@/components/memory/Section";
 import { Tag, DottedDivider, WashiTape } from "@/components/memory/Sticker";
-import { Check, Lock, ShieldCheck, Clock, AlertCircle, Sparkles } from "lucide-react";
+import { Check, Lock, ShieldCheck, Clock, AlertCircle, Sparkles, ChevronLeft, ChevronRight } from "lucide-react";
 
 const modules = [
   { title: "Pack Exclusivos Editáveis com Diversos Modelos e Temas", desc: "Templates prontos fáceis de editar para personalizar pelo computador ou celular, em poucos toques.", tone: "rosa" as const },
@@ -48,6 +49,61 @@ const faqs = [
   { q: "Tem garantia?", a: "Sim, garantia incondicional de 7 dias. Se não gostar, devolvemos 100% do seu dinheiro." },
   { q: "Como vou acessar o conteúdo depois de comprar?", a: "Você recebe um login para acessar a área de membros pelo celular ou computador, quando quiser." },
 ];
+
+// Carrossel: 12 imagens, 6 por página (grade 3×2), 2 páginas no total
+const carouselImages = Array.from({ length: 12 }, (_, i) => `/images/carousel${i + 1}.png`);
+const PAGE_SIZE = 6;
+const TOTAL_PAGES = carouselImages.length / PAGE_SIZE;
+
+const Carousel = () => {
+  const [page, setPage] = useState(0);
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setPage((p) => (p + 1) % TOTAL_PAGES);
+    }, 4000);
+    return () => clearInterval(timer);
+  }, []);
+
+  const prev = () => setPage((p) => (p - 1 + TOTAL_PAGES) % TOTAL_PAGES);
+  const next = () => setPage((p) => (p + 1) % TOTAL_PAGES);
+
+  const visible = carouselImages.slice(page * PAGE_SIZE, page * PAGE_SIZE + PAGE_SIZE);
+
+  return (
+    <div className="relative">
+      <div className="grid grid-cols-3 grid-rows-2 gap-3 mb-4">
+        {visible.map((src, i) => (
+          <div key={i} className="aspect-square rounded-2xl overflow-hidden bg-rosa-soft">
+            <img
+              src={src}
+              alt={`Galeria ${page * PAGE_SIZE + i + 1}`}
+              className="w-full h-full object-cover"
+              onError={(e) => { (e.target as HTMLImageElement).style.display = 'none'; }}
+            />
+          </div>
+        ))}
+      </div>
+      <div className="flex items-center justify-center gap-4">
+        <button onClick={prev} className="w-9 h-9 rounded-full bg-white shadow flex items-center justify-center hover:bg-rosa-soft transition-colors">
+          <ChevronLeft className="w-4 h-4" />
+        </button>
+        <div className="flex gap-2">
+          {Array.from({ length: TOTAL_PAGES }).map((_, i) => (
+            <button
+              key={i}
+              onClick={() => setPage(i)}
+              className={`w-2.5 h-2.5 rounded-full transition-colors ${i === page ? "bg-rosa" : "bg-border"}`}
+            />
+          ))}
+        </div>
+        <button onClick={next} className="w-9 h-9 rounded-full bg-white shadow flex items-center justify-center hover:bg-rosa-soft transition-colors">
+          <ChevronRight className="w-4 h-4" />
+        </button>
+      </div>
+    </div>
+  );
+};
 
 const sectionTitleStyle: React.CSSProperties = { fontSize: "1.9rem" };
 
@@ -127,66 +183,83 @@ const Index = () => {
           </h2>
         </div>
         <div className="grid grid-cols-2 gap-3">
-          {[1,2,3,4].map((i) => (
-            <Placeholder key={i} label={`Print depoimento ${i}`} aspect="tall" tone={(["rosa","menta","azul","amarelo"] as const)[i-1]} />
+          {[1, 2, 3, 4].map((i) => (
+            <img
+              key={i}
+              src={`/images/prova${i}-1.png`}
+              alt={`Avaliação ${i}`}
+              className="rounded-2xl w-full object-cover"
+            />
           ))}
         </div>
         <p className="text-center text-muted-foreground mt-4 italic">
           *Resultados variam conforme dedicação e aplicação do conteúdo.
         </p>
 
-        <h3 className="font-display font-extrabold text-center mt-8 mb-4 leading-tight" style={{ fontSize: "1.5rem" }}>
+        <h3 className="font-display font-extrabold text-center mt-8 mb-4 leading-tight" style={{ fontSize: "1.9rem" }}>
           Clientes de alunas falando sobre os kits da papelaria personalizada
         </h3>
-        <div className="grid grid-cols-2 gap-3">
-          {[1, 2, 3, 4].map((i) => (
+        <div className="grid grid-cols-3 gap-2">
+          {[2, 3, 4].map((i) => (
             <img
               key={i}
               src={`/images/prova${i}.png`}
-              alt={`Prova social ${i}`}
-              className="rounded-2xl w-full object-cover"
+              alt={`Depoimento ${i}`}
+              className="rounded-xl w-full object-cover"
             />
           ))}
         </div>
       </Section>
 
-      {/* DORES */}
+      {/* DORES + REFLEXÃO */}
       <Section tone="rosa">
-        <div className="text-center mb-6">
+        {/* Título */}
+        <div className="text-center mb-5">
           <Tag color="rosa">Eu te entendo</Tag>
-          <h2 className="font-display font-extrabold mt-3 leading-tight" style={sectionTitleStyle}>
+          <h2 className="font-display font-extrabold mt-3 leading-tight" style={{ fontSize: "1.7rem" }}>
             Eu sei que você precisa de uma renda, mas se sente travada, sem saber por onde começar.
           </h2>
         </div>
-        <div className="space-y-3">
+
+        {/* 4 cards lado a lado */}
+        <div className="grid grid-cols-4 gap-2 mb-6">
           {dores.map((d) => (
-            <div key={d.text} className="sticker p-4 flex items-start gap-3">
-              <div className="w-10 h-10 rounded-2xl bg-rosa-soft flex items-center justify-center text-xl flex-shrink-0">
+            <div key={d.text} className="sticker p-3 flex flex-col items-center text-center gap-2">
+              <div className="w-9 h-9 rounded-2xl bg-rosa-soft flex items-center justify-center text-xl flex-shrink-0">
                 {d.icon}
               </div>
-              <p className="font-semibold leading-snug">{d.text}</p>
+              <p className="font-semibold leading-snug" style={{ fontSize: "0.78rem" }}>{d.text}</p>
             </div>
           ))}
         </div>
-      </Section>
 
-      {/* REFLEXÃO */}
-      <Section tone="cream">
-        <div className="text-center mb-5">
+        {/* Reflexão abaixo */}
+        <div className="text-center mb-3">
           <Tag color="amarelo">Reflexão</Tag>
-          <h2 className="font-display font-extrabold mt-3" style={sectionTitleStyle}>
+          <h2 className="font-display font-extrabold mt-3 mb-3 leading-tight" style={{ fontSize: "1.5rem" }}>
             Você sabe do que eu estou falando, né?
           </h2>
+          <p className="text-muted-foreground mb-4 text-sm leading-relaxed max-w-lg mx-auto">
+            Essa vontade de começar algo seu, ganhar dinheiro com criatividade e transformar uma habilidade simples em uma nova fonte de renda… mas, ao mesmo tempo, não saber exatamente por onde começar.
+          </p>
         </div>
-        <p className="text-center text-muted-foreground mb-5">
-          Essa vontade de começar algo seu, ganhar dinheiro com criatividade e transformar uma habilidade simples em uma nova fonte de renda… mas, ao mesmo tempo, não saber exatamente por onde começar.
-        </p>
-        <div className="border-2 border-dashed border-rosa rounded-3xl p-4 bg-rosa-soft flex items-start gap-3">
-          <AlertCircle className="w-6 h-6 text-rosa flex-shrink-0 mt-0.5" />
-          <p className="font-semibold leading-snug">
+        <div className="border-2 border-dashed border-rosa rounded-3xl p-4 bg-rosa-soft flex items-start gap-3 max-w-lg mx-auto">
+          <AlertCircle className="w-5 h-5 text-rosa flex-shrink-0 mt-0.5" />
+          <p className="font-semibold leading-snug text-sm">
             E é por isso que o MemoryART existe: para te entregar um caminho organizado, simples e encantador. Porque quando você tem o passo a passo certo, fica muito mais fácil sair da ideia e chegar na sua primeira venda.
           </p>
         </div>
+      </Section>
+
+      {/* CARROSSEL */}
+      <Section tone="cream">
+        <div className="text-center mb-4">
+          <Tag color="menta">Galeria</Tag>
+          <h2 className="font-display font-extrabold mt-3 leading-tight" style={{ fontSize: "1.6rem" }}>
+            Veja os resultados das nossas alunas ✨
+          </h2>
+        </div>
+        <Carousel />
       </Section>
 
       {/* SOLUÇÃO / KIT */}
@@ -198,24 +271,20 @@ const Index = () => {
             <span className="text-rosa">do zero aos 10k com papelaria personalizada</span>.
           </h2>
         </div>
-        <div className="space-y-4">
+        <div className="grid grid-cols-2 gap-4">
           {modules.map((m, i) => {
             const moduleImages: Record<number, string> = { 0: "/images/modulo1.png", 1: "/images/modulo2.png", 2: "/images/modulo3.png", 3: "/images/modulo4.png", 4: "/images/modulo5.png", 5: "/images/modulo6.png" };
             return (
-              <div key={m.title} className="sticker p-4">
-                <div className="flex items-center gap-2 mb-3">
-                  <span className="w-7 h-7 rounded-full bg-menta flex items-center justify-center font-display font-extrabold text-sm">
+              <div key={m.title} className="sticker p-3">
+                <div className="flex items-center gap-2 mb-2">
+                  <span className="w-6 h-6 rounded-full bg-menta flex items-center justify-center font-display font-extrabold text-xs">
                     {i + 1}
                   </span>
                   <Tag color={m.tone}>Módulo {String(i + 1).padStart(2, "0")}</Tag>
                 </div>
-                {moduleImages[i] ? (
-                  <img src={moduleImages[i]} alt={m.title} className="rounded-2xl mb-3 object-cover mx-auto block" style={{ width: "80%" }} />
-                ) : (
-                  <Placeholder label={`Capa do módulo ${i + 1}`} aspect="video" tone={m.tone} className="mb-3" />
-                )}
-                <h4 className="font-display font-extrabold text-lg leading-tight mb-1">{m.title}</h4>
-                <p className="text-muted-foreground">{m.desc}</p>
+                <img src={moduleImages[i]} alt={m.title} className="rounded-xl mb-2 object-cover w-full" />
+                <h4 className="font-display font-extrabold text-sm leading-tight mb-1">{m.title}</h4>
+                <p className="text-muted-foreground" style={{ fontSize: "0.75rem" }}>{m.desc}</p>
               </div>
             );
           })}
@@ -346,11 +415,11 @@ const Index = () => {
         </div>
         <div className="grid grid-cols-2 gap-3 mb-4">
           <div className="flex flex-col items-center gap-2">
-            <Placeholder label="Foto Roselaine" aspect="square" tone="rosa" />
+            <img src="/images/roselaine.png" alt="Roselaine" className="rounded-2xl w-full object-cover" />
             <p className="font-bold text-center">Roselaine</p>
           </div>
           <div className="flex flex-col items-center gap-2">
-            <Placeholder label="Foto Letícia" aspect="square" tone="azul" />
+            <img src="/images/leticia.png" alt="Letícia" className="rounded-2xl w-full object-cover" />
             <p className="font-bold text-center">Letícia</p>
           </div>
         </div>
@@ -370,7 +439,7 @@ const Index = () => {
             Agora você tem duas opções:
           </h2>
         </div>
-        <div className="space-y-4">
+        <div className="grid grid-cols-2 gap-4">
           <div className="sticker p-5 border-l-4 border-rosa">
             <Tag color="rosa" className="mb-2">Opção 1</Tag>
             <p className="font-semibold leading-snug">
