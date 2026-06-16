@@ -134,6 +134,20 @@ const Index = () => {
         <p className="text-center text-muted-foreground mt-4 italic">
           *Resultados variam conforme dedicação e aplicação do conteúdo.
         </p>
+
+        <h3 className="font-display font-extrabold text-center mt-8 mb-4 leading-tight" style={{ fontSize: "1.5rem" }}>
+          Clientes de alunas falando sobre os kits da papelaria personalizada
+        </h3>
+        <div className="grid grid-cols-2 gap-3">
+          {[1, 2, 3, 4].map((i) => (
+            <img
+              key={i}
+              src={`/images/prova${i}.png`}
+              alt={`Prova social ${i}`}
+              className="rounded-2xl w-full object-cover"
+            />
+          ))}
+        </div>
       </Section>
 
       {/* DORES */}
