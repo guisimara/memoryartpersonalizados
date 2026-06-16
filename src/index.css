@@ -77,11 +77,21 @@
     font-family: 'Baloo 2', 'Nunito', cursive;
     letter-spacing: -0.01em;
   }
+  p {
+    font-size: 1rem;
+  }
 }
 
 @layer components {
   .container-mobile {
-    @apply w-full max-w-[460px] mx-auto px-5;
+    @apply w-full mx-auto px-5;
+    max-width: 460px;
+  }
+
+  @media (min-width: 768px) {
+    .container-mobile {
+      max-width: 800px;
+    }
   }
 
   .dashed-card {
@@ -113,7 +123,8 @@
   }
 
   .cta-button {
-    @apply inline-flex items-center justify-center gap-2 font-bold text-base px-7 py-4 rounded-full transition-all;
+    @apply inline-flex items-center justify-center gap-2 font-bold px-7 py-4 rounded-full transition-all;
+    font-size: 1.3rem;
     background: var(--gradient-cta);
     color: hsl(160 50% 18%);
     box-shadow: 0 6px 0 hsl(147 40% 60%), var(--shadow-soft);
@@ -144,8 +155,9 @@
   }
 
   .tag-label {
-    @apply inline-block px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider;
+    @apply inline-block px-3 py-1 rounded-full font-bold uppercase tracking-wider;
     font-family: 'Baloo 2', cursive;
+    font-size: 0.9rem;
   }
 
   .animate-fade-in { animation: fadeIn 0.6s ease-out both; }

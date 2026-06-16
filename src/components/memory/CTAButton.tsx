@@ -7,7 +7,7 @@ interface Props extends React.ButtonHTMLAttributes<HTMLButtonElement> {
 
 export const CTAButton = ({ variant = "menta", children, className, ...rest }: Props) => (
   <button
-    className={cn("cta-button w-full text-center", variant === "rosa" && "cta-pink", className)}
+    className={cn("cta-button", variant === "rosa" && "cta-pink", className)}
     {...rest}
   >
     {children}
