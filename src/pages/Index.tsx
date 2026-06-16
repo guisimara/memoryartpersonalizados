@@ -123,32 +123,30 @@ const Index = () => {
           <Tag color="amarelo" className="mb-4">✨ Novo kit digital</Tag>
 
           <h1 className="font-display font-extrabold text-foreground mb-3 leading-[1.15]" style={{ fontSize: "2.8rem" }}>
-            O passo a passo simples para começar do zero aos 10k com{" "}
+            Kit com passo a passo simples para começar do zero aos 10k com{" "}
             <span className="relative inline-block">
               <span className="relative z-10 text-rosa">Papelaria Personalizada</span>
               <span className="absolute inset-x-0 bottom-1 h-2 bg-amarelo/70 -z-0 rounded-full" />
             </span>
-            , mesmo sem experiência e usando apenas seu celular.
+            , mesmo sem experiência usando tesoura, papel e seu celular.
           </h1>
 
           <h2 className="text-muted-foreground mb-5 px-2 font-normal" style={{ fontSize: "1.3rem" }}>
-            Um kit completo, delicado e organizado para você dar os primeiros passos com confiança 💕
+            Kit completo com mais de 20 mil materiais delicados e organizados para você começar com confiança e qualidade.
           </h2>
 
-          <ul className="text-left max-w-xs mx-auto space-y-2 mb-6" style={{ fontSize: "1rem" }}>
+          <div className="grid grid-cols-3 gap-3 mb-6">
             {[
-              "Comece usando só o celular",
-              "Sem experiência prévia",
-              "Modelos prontos e fáceis de editar",
+              { icon: "📱", text: "Faça suas primeiras vendas usando o celular, papel e tesoura." },
+              { icon: "📋", text: "Protocolo completo para quem nunca trabalhou com isso." },
+              { icon: "✏️", text: "Modelos prontos e fáceis de editar." },
             ].map((b) => (
-              <li key={b} className="flex items-start gap-2 font-semibold">
-                <span className="mt-0.5 flex-shrink-0 w-5 h-5 rounded-full bg-menta flex items-center justify-center">
-                  <Check className="w-3 h-3 text-foreground" strokeWidth={3} />
-                </span>
-                {b}
-              </li>
+              <div key={b.text} className="sticker p-3 flex flex-col items-center text-center gap-2">
+                <span className="text-2xl">{b.icon}</span>
+                <p className="font-semibold leading-snug" style={{ fontSize: "0.82rem" }}>{b.text}</p>
+              </div>
             ))}
-          </ul>
+          </div>
 
           <div className="relative mb-6 flex justify-center">
             <WashiTape className="-top-2 left-4" />
@@ -196,19 +194,6 @@ const Index = () => {
           *Resultados variam conforme dedicação e aplicação do conteúdo.
         </p>
 
-        <h3 className="font-display font-extrabold text-center mt-8 mb-4 leading-tight" style={{ fontSize: "1.9rem" }}>
-          Clientes de alunas falando sobre os kits da papelaria personalizada
-        </h3>
-        <div className="grid grid-cols-3 gap-2">
-          {[2, 3, 4].map((i) => (
-            <img
-              key={i}
-              src={`/images/prova${i}.png`}
-              alt={`Depoimento ${i}`}
-              className="rounded-xl w-full object-cover"
-            />
-          ))}
-        </div>
       </Section>
 
       {/* DORES + REFLEXÃO */}
@@ -393,6 +378,23 @@ const Index = () => {
               </div>
             </div>
           </div>
+        </div>
+      </Section>
+
+      {/* CLIENTES DE ALUNAS */}
+      <Section tone="lilas">
+        <h3 className="font-display font-extrabold text-center mb-4 leading-tight" style={{ fontSize: "1.9rem" }}>
+          Clientes de alunas falando sobre os kits da papelaria personalizada
+        </h3>
+        <div className="grid grid-cols-3 gap-2">
+          {[2, 3, 4].map((i) => (
+            <img
+              key={i}
+              src={`/images/prova${i}.png`}
+              alt={`Depoimento ${i}`}
+              className="rounded-xl w-full object-cover"
+            />
+          ))}
         </div>
       </Section>
 
