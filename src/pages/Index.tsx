@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
-import { CTAButton } from "@/components/memory/CTAButton";
+import { CTAButton, KIWIFY_URL } from "@/components/memory/CTAButton";
 import { Placeholder } from "@/components/memory/Placeholder";
 import { Section } from "@/components/memory/Section";
 import { Tag, DottedDivider, WashiTape } from "@/components/memory/Sticker";
@@ -366,10 +366,10 @@ const Index = () => {
               </ul>
               <p className="font-display">de <span className="line-through text-muted-foreground">R$ 597,00</span> por</p>
               <p className="font-display font-extrabold text-rosa my-2" style={{ fontSize: "5rem", lineHeight: 1 }}>R$ 47,90</p>
-              <p style={{ fontSize: "1.5rem" }}>ou 6x de <strong>R$ 8,79</strong> no cartão</p>
+              <p style={{ fontSize: "1.5rem" }}>ou 11x de <strong>R$ 5,32</strong> no cartão</p>
               <p className="font-semibold mt-1">à vista no Pix ou Cartão</p>
               <div className="mt-5 flex justify-center">
-                <CTAButton variant="menta">QUERO ENTRAR AGORA →</CTAButton>
+                <CTAButton variant="menta" href={KIWIFY_URL}>QUERO ENTRAR AGORA →</CTAButton>
               </div>
               <div className="flex flex-wrap justify-center gap-2 mt-4">
                 <Tag color="menta">🔒 Pagamento seguro</Tag>
@@ -459,7 +459,7 @@ const Index = () => {
           <div className="sticker p-5 border-l-4 border-menta">
             <Tag color="menta" className="mb-2">Opção 2</Tag>
             <p className="font-semibold leading-snug">
-              Entrar hoje no Kit Protocolo 10k com Papelaria Personalizada por apenas R$47,90 (ou 6x de R$8,79) e finalmente começar sua jornada com um passo a passo claro.
+              Entrar hoje no Kit Protocolo 10k com Papelaria Personalizada por apenas R$47,90 (ou 11x de R$5,32) e finalmente começar sua jornada com um passo a passo claro.
             </p>
           </div>
         </div>
@@ -485,9 +485,9 @@ const Index = () => {
           </p>
           <p className="font-display text-muted-foreground">de <span className="line-through">R$ 597,00</span> por</p>
           <p className="font-display font-extrabold text-rosa" style={{ fontSize: "3rem", lineHeight: 1.1 }}>R$ 47,90</p>
-          <p className="text-muted-foreground mb-4" style={{ fontSize: "1.3rem" }}>ou 6x de <strong>R$ 8,79</strong> no cartão</p>
+          <p className="text-muted-foreground mb-4" style={{ fontSize: "1.3rem" }}>ou 11x de <strong>R$ 5,32</strong> no cartão</p>
           <div className="flex justify-center">
-            <CTAButton variant="rosa">GARANTIR MEU ACESSO →</CTAButton>
+            <CTAButton variant="rosa" href={KIWIFY_URL}>GARANTIR MEU ACESSO →</CTAButton>
           </div>
         </div>
       </Section>
