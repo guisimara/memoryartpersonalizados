@@ -50,34 +50,42 @@ const faqs = [
   { q: "Como vou acessar o conteúdo depois de comprar?", a: "Você recebe um login para acessar a área de membros pelo celular ou computador, quando quiser." },
 ];
 
-// Carrossel: 12 imagens, 6 por página (grade 3×2), 2 páginas no total
+// Carrossel: 12 imagens — 4 por página no mobile (2×2), 6 no desktop (3×2)
 const carouselImages = Array.from({ length: 12 }, (_, i) => `/images/carousel${i + 1}.png`);
-const PAGE_SIZE = 6;
-const TOTAL_PAGES = carouselImages.length / PAGE_SIZE;
 
 const Carousel = () => {
   const [page, setPage] = useState(0);
+  const [pageSize, setPageSize] = useState(4);
+
+  useEffect(() => {
+    const update = () => setPageSize(window.innerWidth >= 768 ? 6 : 4);
+    update();
+    window.addEventListener("resize", update);
+    return () => window.removeEventListener("resize", update);
+  }, []);
+
+  const totalPages = Math.ceil(carouselImages.length / pageSize);
 
   useEffect(() => {
     const timer = setInterval(() => {
-      setPage((p) => (p + 1) % TOTAL_PAGES);
+      setPage((p) => (p + 1) % totalPages);
     }, 4000);
     return () => clearInterval(timer);
-  }, []);
+  }, [totalPages]);
 
-  const prev = () => setPage((p) => (p - 1 + TOTAL_PAGES) % TOTAL_PAGES);
-  const next = () => setPage((p) => (p + 1) % TOTAL_PAGES);
-
-  const visible = carouselImages.slice(page * PAGE_SIZE, page * PAGE_SIZE + PAGE_SIZE);
+  const safePage = page % totalPages;
+  const prev = () => setPage((p) => (p - 1 + totalPages) % totalPages);
+  const next = () => setPage((p) => (p + 1) % totalPages);
+  const visible = carouselImages.slice(safePage * pageSize, safePage * pageSize + pageSize);
 
   return (
     <div className="relative">
-      <div className="grid grid-cols-3 grid-rows-2 gap-3 mb-4">
+      <div className="grid grid-cols-2 md:grid-cols-3 grid-rows-2 gap-3 mb-4">
         {visible.map((src, i) => (
           <div key={i} className="aspect-square rounded-2xl overflow-hidden bg-rosa-soft">
             <img
               src={src}
-              alt={`Galeria ${page * PAGE_SIZE + i + 1}`}
+              alt={`Galeria ${safePage * pageSize + i + 1}`}
               className="w-full h-full object-cover"
               onError={(e) => { (e.target as HTMLImageElement).style.display = 'none'; }}
             />
@@ -89,11 +97,11 @@ const Carousel = () => {
           <ChevronLeft className="w-4 h-4" />
         </button>
         <div className="flex gap-2">
-          {Array.from({ length: TOTAL_PAGES }).map((_, i) => (
+          {Array.from({ length: totalPages }).map((_, i) => (
             <button
               key={i}
               onClick={() => setPage(i)}
-              className={`w-2.5 h-2.5 rounded-full transition-colors ${i === page ? "bg-rosa" : "bg-border"}`}
+              className={`w-2.5 h-2.5 rounded-full transition-colors ${i === safePage ? "bg-rosa" : "bg-border"}`}
             />
           ))}
         </div>
@@ -122,7 +130,7 @@ const Index = () => {
         <div className="text-center animate-fade-in">
           <Tag color="amarelo" className="mb-4">✨ Novo kit digital</Tag>
 
-          <h1 className="font-display font-extrabold text-foreground mb-3 leading-[1.15]" style={{ fontSize: "2.8rem" }}>
+          <h1 className="font-display font-extrabold text-foreground mb-3 leading-[1.15] text-[1.9rem] md:text-[2.8rem]">
             Kit com passo a passo simples para começar do zero aos 10k com{" "}
             <span className="relative inline-block">
               <span className="relative z-10 text-rosa">Papelaria Personalizada</span>
@@ -131,7 +139,7 @@ const Index = () => {
             , mesmo sem experiência usando tesoura, papel e seu celular.
           </h1>
 
-          <h2 className="text-muted-foreground mb-5 px-2 font-normal" style={{ fontSize: "1.3rem" }}>
+          <h2 className="text-muted-foreground mb-5 px-2 font-normal text-[1.05rem] md:text-[1.3rem]">
             Kit completo com mais de 20 mil materiais delicados e organizados para você começar com confiança e qualidade.
           </h2>
 
@@ -155,7 +163,7 @@ const Index = () => {
               src="/images/hero-banner-att.png"
               alt="Kit MemoryART"
               className="rounded-3xl object-cover"
-              style={{ width: "80%" }}
+              style={{ width: "95%" }}
             />
           </div>
 
@@ -180,7 +188,7 @@ const Index = () => {
             Muitas mulheres já começaram a faturar, trabalhando em casa com Papelaria Personalizada.
           </h2>
         </div>
-        <div className="grid grid-cols-2 gap-3">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
           {[1, 2, 3, 4].map((i) => (
             <img
               key={i}
@@ -256,7 +264,7 @@ const Index = () => {
             <span className="text-rosa">do zero aos 10k com papelaria personalizada</span>.
           </h2>
         </div>
-        <div className="grid grid-cols-2 gap-4">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           {modules.map((m, i) => {
             const moduleImages: Record<number, string> = { 0: "/images/modulo1.png", 1: "/images/modulo2.png", 2: "/images/modulo3.png", 3: "/images/modulo4.png", 4: "/images/modulo5.png", 5: "/images/modulo6.png" };
             return (
@@ -284,8 +292,8 @@ const Index = () => {
             O Protocolo 10k com Papelaria Personalizada é para você que…
           </h2>
         </div>
-        <div className="flex gap-5 items-center">
-          <div className="sticker p-5 flex-1">
+        <div className="flex flex-col md:flex-row gap-5 md:items-center">
+          <div className="sticker p-5 w-full md:flex-1">
             <ul className="space-y-3">
               {paraVoce.map((p) => (
                 <li key={p} className="flex items-start gap-3">
@@ -300,8 +308,7 @@ const Index = () => {
           <img
             src="/images/paraquem.png"
             alt="Para quem é"
-            className="rounded-3xl object-cover flex-shrink-0"
-            style={{ width: "52%" }}
+            className="rounded-3xl object-cover w-full md:flex-shrink-0 md:w-[52%]"
           />
         </div>
       </Section>
@@ -344,7 +351,7 @@ const Index = () => {
               src="/images/hero-banner-att.png"
               alt="Kit MemoryART"
               className="rounded-2xl mb-5 mx-auto block"
-              style={{ width: "80%" }}
+              style={{ width: "95%" }}
             />
             <div className="text-center">
               <p className="uppercase tracking-widest font-bold text-muted-foreground">Acesso imediato</p>
@@ -386,7 +393,7 @@ const Index = () => {
         <h3 className="font-display font-extrabold text-center mb-4 leading-tight" style={{ fontSize: "1.9rem" }}>
           Clientes de alunas falando sobre os kits da papelaria personalizada
         </h3>
-        <div className="grid grid-cols-3 gap-2">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
           {[2, 3, 4].map((i) => (
             <img
               key={i}
@@ -400,14 +407,14 @@ const Index = () => {
 
       {/* PAGAMENTO */}
       <Section tone="cream">
-        <div className="grid grid-cols-3 gap-3">
+        <div className="flex flex-row gap-3 justify-center">
           {[
             { icon: <ShieldCheck className="w-5 h-5" />, t: "Pagamento seguro" },
             { icon: <Sparkles className="w-5 h-5" />, t: "Pix • Cartão • Boleto" },
             { icon: <Clock className="w-5 h-5" />, t: "Acesso imediato" },
           ].map((p) => (
-            <div key={p.t} className="sticker p-3 text-center">
-              <div className="w-9 h-9 mx-auto rounded-full bg-menta-soft flex items-center justify-center mb-2">{p.icon}</div>
+            <div key={p.t} className="sticker p-3 text-center flex-1 bg-gray-100">
+              <div className="w-9 h-9 mx-auto rounded-full bg-gray-200 flex items-center justify-center mb-2">{p.icon}</div>
               <p className="font-bold leading-tight" style={{ fontSize: "0.75rem" }}>{p.t}</p>
             </div>
           ))}

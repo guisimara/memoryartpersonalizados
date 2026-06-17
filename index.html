@@ -18,6 +18,19 @@
   <meta name="twitter:card" content="summary_large_image">
   <meta property="og:type" content="website">
   <meta name="facebook-domain-verification" content="o8k1begcp9p7t2txwjnxlhc0nqxmt9" />
+  <style>
+    /* Remove Lovable floating badge */
+    [data-lovable-badge],
+    #lovable-badge,
+    .lovable-badge,
+    a[href*="lovable.dev"],
+    a[href*="lovable.app"][target="_blank"]:not([href*="memoryart"]) {
+      display: none !important;
+      visibility: hidden !important;
+      opacity: 0 !important;
+      pointer-events: none !important;
+    }
+  </style>
 
   <!-- Utmify -->
   <script
