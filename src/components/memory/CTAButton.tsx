@@ -27,8 +27,6 @@ export const CTAButton = ({ variant = "menta", children, className, href, onClic
     return (
       <a
         href={href}
-        target="_blank"
-        rel="noopener noreferrer"
         className={cls}
         onClick={fireInitiateCheckout}
       >
